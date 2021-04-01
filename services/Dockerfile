@@ -3,7 +3,7 @@ LABEL maintainer="Guardians Of The Galaxy"
 FROM python:3.9
 
 # Change port per service
-EXPOSE 8000
+EXPOSE 9000
 
 COPY ./app /app
 WORKDIR /app/
