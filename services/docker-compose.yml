@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+
+  book-service:
+    build:
+      dockerfile: Dockerfile
+      context: .
+    image: local/alexandria:1.0.000
+    env_file:
+      - .env
+    command: bash -c 'python /book_microservices/app/main.py'
+    ports:
+      - 8000:8000
+    environment:
+      - MONGO_CONNECTION_URL=mongodb://mongo:27017/
+    depends_on:
+      - mongo
+  mongo:
+    container_name: book-mongo
+    image: mongo
+    env_file:
+      - .env
+    ports:
+      - 27017:27017
