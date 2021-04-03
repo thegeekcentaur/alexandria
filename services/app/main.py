@@ -11,12 +11,17 @@ from fastapi import FastAPI
 from fastapi import Response, status
 from fastapi.middleware.cors import CORSMiddleware
 from typing import Optional
+import logging
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger(__name__)
+
 # local
 from api.routes import urls
 from common.lib import searchTerm, pageLimit
 from common import getenv
 from core.database import db, collection
 from services import crud
+from services import book_details_module
 
 
 app = FastAPI(debug=True)
@@ -109,3 +114,37 @@ async def deleteBook(response: Response, dboard_id: str):
     response.status_code = status.HTTP_404_NOT_FOUND
     return {"book_id": dboard_id,
             "message": "Book Id not found in DB"}
+
+# Fetching book by ISBN...
+@app.get(urls.get_book_details_by_isbn)
+async def get_books_by_isbn(isbn):
+    logger.info("Fetching Book details for the ISBN {}".format(isbn))
+    item = book_details_module.get_books_by_filter('isbn', isbn)
+    if item:
+        return item
+    response.status_code = status.HTTP_404_NOT_FOUND
+    return {"isbn": isbn,
+            "message": "book not found for given ISBN"}
+
+# Fetching book by Author name...
+@app.get(urls.get_book_details_by_author)
+async def get_books_by_author(author_name):
+    logger.info("Fetching Book details for the Author Name: \"{}\"".format(author_name))
+    item = book_details_module.get_books_by_filter('inauthor', author_name)
+    if item:
+        return item
+    response.status_code = status.HTTP_404_NOT_FOUND
+    return {"author": author_name,
+            "message": "Either invalid author name or book not found for given Author Name"}
+
+# Fetching book by Author name...
+@app.get(urls.get_book_details_by_genre)
+async def get_books_by_genre(genre):
+    logger.info("Fetching Book details for the genre: \"{}\"".format(genre))
+    item = book_details_module.get_books_by_filter('subject', genre)
+    if item:
+        return item
+    response.status_code = status.HTTP_404_NOT_FOUND
+    return {"genre": genre,
+            "message": "Either invalid genre or book not found for given genre"}
+
