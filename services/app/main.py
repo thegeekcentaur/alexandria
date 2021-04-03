@@ -17,6 +17,7 @@ from common.lib import searchTerm, pageLimit
 from common import getenv
 from core.database import db, collection
 from services import crud
+from services import book_details_module
 
 
 app = FastAPI(debug=True)
@@ -109,3 +110,8 @@ async def deleteBook(response: Response, dboard_id: str):
     response.status_code = status.HTTP_404_NOT_FOUND
     return {"book_id": dboard_id,
             "message": "Book Id not found in DB"}
+
+# Fetching book by ISBN...
+@app.get(urls.getbook_url)
+async def get_books_by_isbn(isbn: int):
+    return book_details_module.get_books_by_isbn(isbn)
