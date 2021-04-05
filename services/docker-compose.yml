@@ -7,9 +7,6 @@ services:
       dockerfile: Dockerfile
       context: .
     image: local/alexandria:1.0.002
-    #env_file:
-    #  - .env
-    #command: bash -c 'python /book_microservices/app/main.py'
     ports:
       - 9000:9000
     environment:
