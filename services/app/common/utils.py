@@ -12,13 +12,12 @@ def collection_insert_record(service_name, ds_item) -> str:
     """
     Used to insert record based on the registered service name in db-service
 
-    :param service_name,kpi_res_list:
+    :param kpi_res_list:
     :type str,list:
     :return str(success message for insertion):
                                                     """
     req_body = json.dumps(ds_item, indent=4)
     try:
-        #db_id_res = requests.post(urls.db_service_reg + service_name, data=req_body)
         logger.info("in post...")
     except ConnectionError as err:
         logger.error("db service connection failed for inserting record: {}".format(err))
@@ -29,18 +28,17 @@ def collection_insert_record(service_name, ds_item) -> str:
     return db_id_res
 
 
-def query_check(service_name, ds_item_body):
+def query_check(book_name):
     """
     Used to query a particular record based on the registered service name in db-service.
 
-    :param service_name,ds_item_body:
+    :param book_name:
     :type str,dict:
     :return success response from db-service:
                                                         """
 
-    req_body = json.dumps(ds_item_body, indent=4)
+    req_body = json.dumps(book_name, indent=4)
     try:
-        #db_id_res = requests.post(urls.db_service_reg + service_name + "/query", data=req_body)
         logger.info("in post...")
     except ConnectionError as e:
         logger.error("db service connection failed for querying record: {}".format(err))

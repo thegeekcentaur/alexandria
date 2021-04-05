@@ -7,7 +7,7 @@ __maintainer__ = "archanda"
 __email__ = "2020mt93064@wilp.bits-pilani.ac.in"
 __status__ = "dev"
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Body
 from fastapi import Response, status
 from fastapi.middleware.cors import CORSMiddleware
 from typing import Optional
@@ -17,11 +17,17 @@ logger = logging.getLogger(__name__)
 
 # local
 from api.routes import urls
-from common.lib import searchTerm, pageLimit
-from common import getenv
-from core.database import db, collection
-from services import crud
 from services import book_details_module
+
+from core.database import (
+    add_book,
+    get_book,
+    delete_book,
+    retrieve_books
+)
+from models.schemas.book import (
+    BookSchema
+)
 
 
 app = FastAPI(debug=True)
@@ -36,84 +42,32 @@ app.add_middleware(
 
 
 # saving the book data to mongodb..
-@app.post(urls.save_book)
-async def saveBook(response: Response, book_data: dict):
-    response_check = crud.save_book(book_data)
-    if response_check:
-        if "status" in list(response_check.keys()) and "message" in list(response_check.keys()):
-            response.status_code = status.HTTP_400_BAD_REQUEST
-            return {"message": response_check.get("message")}
-        else:
-            response.status_code = status.HTTP_201_CREATED
-            return {"book_id": response_check.get("data"),
-                    "message": "book Created successfully"}
-    response.status_code = status.HTTP_400_BAD_REQUEST
-    return {"message": "Request body does not contain any valid parameters."}
+@app.post(urls.save_book_url)
+async def save_book(book_data: BookSchema = Body(...)):
+    new_entry = await add_book(book_data)
+    return {"new book": new_entry}
 
-
-# Getting list of books from mongodb...
-@app.get(urls.getbookNames_url)
-async def getBookList(response: Response, q: Optional[str] = None, page: Optional[int] = None,
-                           limit: Optional[int] = None):
-    get_items = crud.getbook_list()
-    # search term..
-    if q:
-        get_items = searchTerm(q)
-        if get_items is None:
-            get_items = []
-    # pagination logic..
-    if page and limit:
-        records_lst, total_records = pageLimit(get_items, page, limit)
-        return {"book_list": records_lst, "totalrecords": total_records}
-    if get_items:
-        return {"book_list": get_items, "totalrecords": len(get_items)}
-    return {"book_list": get_items, "totalrecords": len(get_items)}
-
-
-# Getting book data from mongodb...
-@app.get(urls.getbook_url)
-async def getBookData(response: Response, dboard_id: str):
-    item = crud.getbook_Data(dboard_id)
-    if item:
-        return item
-    response.status_code = status.HTTP_404_NOT_FOUND
-    return {"book_id": dboard_id,
-            "message": "book Id not found in DB"}
-
-
-# Updating book data
-@app.put(urls.updatebook_url)
-async def updateBook(response: Response, dboard_id: str, updated_book_data: dict):
-    new_query_dict = crud.update_Book(dboard_id, updated_book_data)
-    if new_query_dict:
-        if new_query_dict["status"]:
-            return {"book_id": dboard_id,
-                    "message": "Book updated successfully",
-                    "updated_response": new_query_dict}
-        else:
-            if new_query_dict["message"] == "InvalidID":
-                return {"book_id": dboard_id,
-                        "message": "Book Id not found in DB"}
-            else:
-                return {"book_id": dboard_id,
-                        "message": "Request body does not contain any valid parameters."}
-    response.status_code = status.HTTP_404_NOT_FOUND
-    return {"book_id": dboard_id,
-            "message": "Something went wrong while updating book"}
-
+# Getting book by id from mongodb...
+@app.get(urls.get_book_by_id_url)
+async def get_book_by_id(book_id: str):
+    #print(book_id)
+    book_found = await get_book(book_id)
+    if book_found:
+        return {"book": book_found}
 
 # Deleting book data
-@app.delete(urls.deletebook_url)
-async def deleteBook(response: Response, dboard_id: str):
-    response_check = crud.delete_Book(dboard_id)
-    if response_check:
-        response.status_code = status.HTTP_204_NO_CONTENT
-        return {"book_id": dboard_id,
-                "message": "Book Deleted Successfully"}
+@app.delete(urls.delete_book_by_id_url)
+async def delete_book_by_id(book_id: str):
+    book_deleted = await delete_book(book_id)
+    if book_deleted:
+        return {"id": book_id, "message": "Deletion successful"}
 
-    response.status_code = status.HTTP_404_NOT_FOUND
-    return {"book_id": dboard_id,
-            "message": "Book Id not found in DB"}
+# Getting list of books from mongodb...
+@app.get(urls.get_all_books_url)
+async def get_book_list():
+    books = await retrieve_books()
+    return {"books": books, "totalBooks": len(books)}
+
 
 # Fetching book by ISBN...
 @app.get(urls.get_book_details_by_isbn)
@@ -147,4 +101,3 @@ async def get_books_by_genre(genre):
     response.status_code = status.HTTP_404_NOT_FOUND
     return {"genre": genre,
             "message": "Either invalid genre or book not found for given genre"}
-

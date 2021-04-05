@@ -16,7 +16,7 @@ logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 
-app = FastAPI(debug=True)
+#app = FastAPI(debug=True)
 
 URL = 'https://www.googleapis.com/books/v1/volumes'
 

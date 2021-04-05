@@ -6,19 +6,21 @@ services:
     build:
       dockerfile: Dockerfile
       context: .
-    image: local/alexandria:1.0.000
-    env_file:
-      - .env
-    command: bash -c 'python /book_microservices/app/main.py'
+    image: local/alexandria:1.0.002
+    #env_file:
+    #  - .env
+    #command: bash -c 'python /book_microservices/app/main.py'
     ports:
-      - 8000:8000
+      - 9000:9000
     environment:
+      - PORT=9000
+      - SERVICE_NAME=alexandria
       - MONGO_CONNECTION_URL=mongodb://mongo:27017/
     depends_on:
       - mongo
   mongo:
-    container_name: book-mongo
-    image: mongo
+    container_name: mongodb
+    image: mongo:4.4.4
     env_file:
       - .env
     ports:
