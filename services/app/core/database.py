@@ -5,13 +5,13 @@ import logging
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
+# DB details
 MONGO_DETAILS = "mongodb://mongodb:27017"
 client = motor.motor_asyncio.AsyncIOMotorClient(MONGO_DETAILS)
 database = client.user_preferences
 books_collection = database.get_collection("books_collection")
 
 # helpers
-
 
 def format_book(book) -> dict:
     return {

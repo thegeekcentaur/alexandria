@@ -21,7 +21,5 @@ services:
   mongo:
     container_name: mongodb
     image: mongo:4.4.4
-    env_file:
-      - .env
     ports:
       - 27017:27017
