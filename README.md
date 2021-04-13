@@ -3,5 +3,5 @@ A books management system to demonstrate GIT workflow and various stages of deve
 
 # High Level Diagram (tentative)
 <p align="center">
-  <img src="hld.jpg" width="350" title="High Level Diagram">
+  <img src="images/hld.jpg" width="350" title="High Level Diagram">
 </p>
