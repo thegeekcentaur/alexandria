@@ -6,10 +6,11 @@ Alexandria is a project to enable anyone to search for books in the net, and if 
 
 ![Image](images/logo.jpg)
 
-The great **library of Alexandria**, located in modern-day Alexandria, Egypt, was one of the largest libraries of the ancient world. It is said that during its hey day the library used to around 400,000 scrolls.
-While the ancient times have come and gone, humanity's quest for knowledge is still far from over. But now we have more elegant and efficient ways to search for book, sitting at the comfort of our home. 
-We can browse and look for books, make notes, tag them, and keep for future reference as book-marks.
-Project Alexandria is a small show-case of such capabilities, with a tribute to its much richer and greater ancestor.
+The great **library of Alexandria**, located in modern-day Alexandria, Egypt, was one of the largest libraries of the ancient world. It is said that during its hey day the library used to host around 400,000 scrolls.
+While the ancient times have come and gone, humanity's quest for knowledge is still far from over. But today there are more elegant and efficient ways to search for book, sitting at the comfort of our home.
+We can browse and look for books, make notes, tag them, and keep for future reference as book-marks, thanks to technologies made available.
+
+Project Alexandria is a small show-case of such capabilities of the modern technologies, with a tribute to its much richer and greater ancestor.
 
 ### Core Functionalities
 
