@@ -1,6 +1,6 @@
 ## Welcome to Alexandria
 
-Alexandria is a small side project to allow someone to search for books in the net, and if necessary save his/her preferences locally for future reference.
+Alexandria is a project to enable anyone to search for books in the net, and if necessary save his/her preferences locally for future reference.
 
 ### A Brief History
 
@@ -16,7 +16,7 @@ Project Alexandria is a small show-case of such capabilities, with a tribute to 
 At basic level, Alexandria provides 
 - A set of APIs (based on python FastAPI) to google for books, based on author names, genre, ISBN ID etc.
 - A local database running behind the scene, which may be used to stored some meta data about the search results, with necessary notes/tagging
-- The APIs as well as the underlying database are spun up docker containers so that it may be run anywhere
+- The APIs as well as the underlying database are spun up as docker containers so that it may be run anywhere by the user
 - In future this may also be extended to have a formal UI where user may navigate and do the same steps, in a more friendlier way
 
 
