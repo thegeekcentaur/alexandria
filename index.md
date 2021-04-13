@@ -1,37 +1,28 @@
-## Welcome to GitHub Pages
+## Welcome to Alexandria
 
-You can use the [editor on GitHub](https://github.com/arnab-chanda/alexandria/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+Alexandria is a small side project to allow someone to search for books in the net, and if necessary save his/her preferences locally for future reference.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+### A Brief History
 
-### Markdown
+![Image](images/logo.jpg)
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+The great **library of Alexandria**, located in modern-day Alexandria, Egypt, was one of the largest libraries of the ancient world. It is said that during its hey day the library used to around 400,000 scrolls.
+While the ancient times have come and gone, humanity's quest for knowledge is still far from over. But now we have more elegant and efficient ways to search for book, sitting at the comfort of our home. 
+We can browse and look for books, make notes, tag them, and keep for future reference as book-marks.
+Project Alexandria is a small show-case of such capabilities, with a tribute to its much richer and greater ancestor.
 
-```markdown
-Syntax highlighted code block
+### Core Functionalities
 
-# Header 1
-## Header 2
-### Header 3
+At basic level, Alexandria provides 
+- A set of APIs (based on python FastAPI) to google for books, based on author names, genre, ISBN ID etc.
+- A local database running behind the scene, which may be used to stored some meta data about the search results, with necessary notes/tagging
+- The APIs as well as the underlying database are spun up docker containers so that it may be run anywhere
+- In future this may also be extended to have a formal UI where user may navigate and do the same steps, in a more friendlier way
 
-- Bulleted
-- List
-
-1. Numbered
-2. List
 
 **Bold** and _Italic_ and `Code` text
 
-[Link](url) and ![Image](src)
-```
+### Underlying Technologies/References
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/arnab-chanda/alexandria/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+1. For more details on how to use _Google Books API_ [check out the documentation](https://developers.google.com/books/docs/v1/using).
+2. For more details on how _FastAPI_ works, [check out the documentation](https://fastapi.tiangolo.com).
