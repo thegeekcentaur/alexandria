@@ -24,5 +24,5 @@ At basic level, Alexandria provides
 
 ### Underlying Technologies/References
 
-1. For more details on how to use _Google Books API_ [check out the documentation](https://developers.google.com/books/docs/v1/using).
+1. For more details on how to use _Google Books API_, [check out the documentation](https://developers.google.com/books/docs/v1/using).
 2. For more details on how _FastAPI_ works, [check out the documentation](https://fastapi.tiangolo.com).
