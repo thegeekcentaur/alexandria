@@ -22,6 +22,7 @@ from services import book_details_module
 from core.database import (
     add_book,
     get_book,
+    update_book_by_id,
     delete_book,
     retrieve_books
 )
@@ -46,6 +47,22 @@ app.add_middleware(
 async def save_book(book_data: BookSchema = Body(...)):
     new_entry = await add_book(book_data)
     return {"new book": new_entry}
+
+
+# Added by ArchanaTBits
+# Updating the existing book data
+@app.put(urls.update_book_by_id_url)
+async def update_book_details_by_id(book_id: str, book_data: BookSchema = Body(...)):
+    logger.info("Updating Book details for the Book Id {}".format(book_id))
+    try:
+        book_updated = await update_book_by_id(book_id, book_data)
+        if book_updated:
+            return {"Book Updated  Successfully {}": book_id}
+    except Exception as ex:
+        template = "An exception of type {0} occurred. Arguments:\n{1!r}"
+        message = template.format(type(ex).__name__, ex.args)
+        return message
+
 
 # Getting book by id from mongodb...
 @app.get(urls.get_book_by_id_url)

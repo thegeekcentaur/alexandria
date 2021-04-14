@@ -10,6 +10,8 @@ __status__ = "dev"
 
 save_book_url="/api/books/local"
 get_book_by_id_url="/api/books/local/id/{book_id}"
+# Added by ArchanaTBits
+update_book_by_id_url="/api/books/local/id/{book_id}"
 delete_book_by_id_url = "/api/books/local/id/{book_id}"
 get_all_books_url="/api/books/local/all"
 get_book_details_by_isbn = "/api/books/isbn/{isbn}"
