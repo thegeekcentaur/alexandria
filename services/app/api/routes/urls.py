@@ -18,4 +18,4 @@ get_book_details_by_isbn = "/api/books/isbn/{isbn}"
 get_book_details_by_author = "/api/books/author/{author_name}"
 get_book_details_by_genre = "/api/books/genre/{genre}"
 # Added by Surabhi
-get_book_details_by_publisher = "/api/books/publisher/{publisher}"
+get_book_details_by_publisher = "/api/books/publishers/{publisher_name}"
