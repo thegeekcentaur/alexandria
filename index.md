@@ -36,25 +36,25 @@ To know more about the services, go to our Services README [click on](https://gi
 #### Below are some of the sample genre Books that you can know more about through the APIs
 
 #### Historical :
-Something Red
-Miss Cameron's Fall from Grace
-Ruth's Journey
-The Freedom House
-The Dark Room
-Lucky Billy
-Rainbows on the Moon
-Black Mountain
+Something Red,
+Miss Cameron's Fall from Grace,
+Ruth's Journey,
+The Freedom House,
+The Dark Room,
+Lucky Billy,
+Rainbows on the Moon,
+Black Mountain,
 
 #### Motivational :
-Consider a Greater Purpose
-Chocolate for a Mother's Heart
-I'll Walk with You
+Consider a Greater Purpose,
+Chocolate for a Mother's Heart,
+I'll Walk with You,
 
 #### Inspirational:
-Cyndy's Blessed Assurance
-His Precious Inheritance
-The Texas Ranger's Secret
-Rocky Mountain Dreams
-The Negotiator
-Second Chance Hero
+Cyndy's Blessed Assurance,
+His Precious Inheritance,
+The Texas Ranger's Secret,
+Rocky Mountain Dreams,
+The Negotiator,
+Second Chance Hero,
 The Baby Barter
