@@ -29,6 +29,21 @@ async def add_book(book_data: dict):
     new_book = await books_collection.find_one({"_id": book.inserted_id})
     return format_book(new_book)
 
+# Added by ArchanaTBits
+async def update_book_by_id(book_id:str, book_data: dict) -> dict:
+    curr_book = await books_collection.find_one({"_id": ObjectId(book_id)})
+    if curr_book is not None:
+        logger.info("Book Exists")
+        update_criteria = { "_id": ObjectId(book_id) }
+        newvalues = {"$set": { "title": book_data.title if (book_data.title is not None and len(book_data.title) > 0) else curr_book.title ,
+                             "isbnID": book_data.isbnID if (book_data.isbnID is not None  and len(book_data.isbnID) > 0) else curr_book.isbnID,
+                             "notes": book_data.notes if (book_data.notes is not None  and len(book_data.notes) > 0) else curr_book.notes,
+                              "tags": book_data.tags  if (book_data.tags is not None  and len(book_data.tags) > 0) else curr_book.tags} }
+    book_updated = await books_collection.update_one(update_criteria, newvalues)
+    return book_updated.acknowledged# returns true: if updated successfully
+
+
+
 async def get_book(book_id: str) -> dict:
     curr_book = await books_collection.find_one({"_id": ObjectId(book_id)})
     return format_book(curr_book)

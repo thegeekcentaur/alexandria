@@ -10,8 +10,12 @@ __status__ = "dev"
 
 save_book_url="/api/books/local"
 get_book_by_id_url="/api/books/local/id/{book_id}"
+# Added by ArchanaTBits
+update_book_by_id_url="/api/books/local/id/{book_id}"
 delete_book_by_id_url = "/api/books/local/id/{book_id}"
 get_all_books_url="/api/books/local/all"
 get_book_details_by_isbn = "/api/books/isbn/{isbn}"
 get_book_details_by_author = "/api/books/author/{author_name}"
 get_book_details_by_genre = "/api/books/genre/{genre}"
+# Added by Surabhi
+get_book_details_by_publisher = "/api/books/publishers/{publisher_name}"
