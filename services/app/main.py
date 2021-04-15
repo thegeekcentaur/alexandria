@@ -148,14 +148,14 @@ async def get_books_by_genre(genre):
 
 # Fetching book by Publisher...
 @app.get(urls.get_book_details_by_publisher)
-async def get_books_by_publisher(publisher):
-    logger.info("Fetching Book details for the publisher: \"{}\"".format(publisher))
+async def get_books_by_publisher(publisher_name):
+    logger.info("Fetching Book details for the publisher: \"{}\"".format(publisher_name))
     try:
-        item = book_details_module.get_books_by_filter('inpublisher', publisher)
+        item = book_details_module.get_books_by_filter('inpublisher', publisher_name)
         if item:
             return item
         response.status_code = status.HTTP_404_NOT_FOUND
-        return {"publisher": publisher,
+        return {"publisher": publisher_name,
             "message": "Either invalid publisher or book not found for given publisher"}
     except Exception as ex:
                 template = "An exception of type {0} occurred. Arguments:\n{1!r}"
