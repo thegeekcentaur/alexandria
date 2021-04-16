@@ -30,8 +30,10 @@ To know more about the services, go to our Services README [click on](https://gi
 
 ### Underlying Technologies/References
 
-1. For details on how to use _Google Books API_, [check out the documentation](https://developers.google.com/books/docs/v1/using).
-2. For details on how _FastAPI_ works, [check out the documentation](https://fastapi.tiangolo.com).
+1. For details on how to use _Google Books API_ [check out the documentation](https://developers.google.com/books/docs/v1/using).
+2. For details on how _FastAPI_ works [check out the documentation](https://fastapi.tiangolo.com).
+3. For details on _MongoDB_ [check out the documentation](https://www.mongodb.com/).
+4. For details on _Docker_ [check out the documentation](https://www.docker.com/).
 
 #### Below are some of the sample genre Books that you can know more about through the APIs
 
@@ -58,3 +60,4 @@ Rocky Mountain Dreams,
 The Negotiator,
 Second Chance Hero,
 The Baby Barter
+
