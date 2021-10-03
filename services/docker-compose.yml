@@ -6,7 +6,7 @@ services:
     build:
       dockerfile: Dockerfile
       context: .
-    image: local/alexandria:1.0.002
+    image: local/alexandria:1.0.003
     ports:
       - 9000:9000
     environment:

@@ -42,5 +42,5 @@ Alexandria interacts with the google books API and provides functions to insert 
 # High Level Diagram (tentative)
 <br>
 <p align="center">
-  <img src="images/hld.jpg" width="350" title="High Level Diagram">
+  <img src="images/hld-new.jpg" width="350" title="High Level Diagram">
 </p>
