@@ -18,14 +18,6 @@ from services.book_service_v1 import router as BookServiceRouteV1
 from services.catalog_service_v1 import router as CatalogServiceRouteV1
 from services.user_service_v1 import router as UserServiceRouteV1
 
-from core.database import (
-    add_book,
-    get_book,
-    update_book_by_id,
-    delete_book,
-    retrieve_books
-)
-
 app = FastAPI(debug=True)
 
 app.add_middleware(
