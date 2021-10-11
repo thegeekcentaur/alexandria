@@ -10,12 +10,12 @@ __status__ = "dev"
 from fastapi import FastAPI, Body, APIRouter, Request, Response, status
 from fastapi.responses import HTMLResponse
 import logging
+from core import database
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 # route-specific modules go here
 from api.routes import urls
-from services import book_details_module
 
 from models.schemas.book import (
     BookSchema
@@ -26,7 +26,7 @@ router = APIRouter()
 # saving the book data to mongodb..
 @router.post(urls.save_book_url)
 async def save_book(book_data: BookSchema = Body(...)):
-    new_entry = await add_book(book_data)
+    new_entry = await database.add_book(book_data)
     return {"new book": new_entry}
 
 
@@ -36,7 +36,7 @@ async def save_book(book_data: BookSchema = Body(...)):
 async def update_book_details_by_id(book_id: str, book_data: BookSchema = Body(...)):
     logger.info("Updating Book details for the Book Id {}".format(book_id))
     try:
-        book_updated = await update_book_by_id(book_id, book_data)
+        book_updated = await database.update_book_by_id(book_id, book_data)
         if book_updated:
             return {"Book Updated  Successfully {}": book_id}
     except Exception as ex:
@@ -49,7 +49,7 @@ async def update_book_details_by_id(book_id: str, book_data: BookSchema = Body(.
 async def get_book_by_id(book_id: str):
     logger.info("Fetching Book details for the ID {}".format(book_id))
     try:
-        book_found = await get_book(book_id)
+        book_found = await database.get_book(book_id)
         if book_found:
             return {"book": book_found}
     except Exception as ex:
@@ -61,7 +61,7 @@ async def get_book_by_id(book_id: str):
 @router.delete(urls.delete_book_by_id_url)
 async def delete_book_by_id(book_id: str):
     try:
-        book_deleted = await delete_book(book_id)
+        book_deleted = await database.delete_book(book_id)
         if book_deleted:
             return {"id": book_id, "message": "Deletion successful"}
     except Exception as ex:
@@ -72,7 +72,7 @@ async def delete_book_by_id(book_id: str):
 # Getting list of books from mongodb...
 @router.get(urls.get_all_books_url)
 async def get_book_list():
-    books = await retrieve_books()
+    books = await database.retrieve_books()
     return {"books": books, "totalBooks": len(books)}
 
 # Fetching book by ISBN...

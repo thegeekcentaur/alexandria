@@ -13,11 +13,89 @@ import logging
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
+
 # route-specific modules go here
 from api.routes import urls
+from core import database
+from models.schemas.catalog import (
+    CatalogSchema
+)
 
 router = APIRouter()
 
+# Catalog APIs Added by ArchanaTBits
+
+
+# saving the catalog data to mongodb..
+@router.post(urls.create_catalog_url)
+async def create_catalog(catalog_data: CatalogSchema = Body(...)):
+    new_entry = await database.create_catalog(catalog_data)
+    return {"new catalog": new_entry}
+
+
+# Added by ArchanaTBits
+# Search Catalog
+@router.get(urls.get_catalog_url)
+async def get_catalog_details(catalog_name : str):
+    try:
+        logger.info("Fetching Catalog details :".format(catalog_name))
+        print("Fetching Catalog details :")
+        catalog_item = await database.get_catalog(catalog_name)
+        print("catalog_item")
+        print(catalog_item)
+        if catalog_item:
+            return catalog_item
+        response.status_code = status.HTTP_404_NOT_FOUND
+        return {"catalog_item": catalog_item,
+            "message": "Catalog not found for given search string"}
+    except Exception as ex:
+        template = "An exception of type {0} occurred. Arguments:\n{1!r}"
+        message = template.format(type(ex).__name__, ex.args)
+        return message
+
+# Updating the existing catalog data
+@router.put(urls.add_book_to_catalog_url)
+async def add_book_to_catalog(catalog_name: str, bood_isbn_id: str):
+    logger.info("Adding book for the catalog {}".format(catalog_name))
+    try:
+        catalog_updated = await database.update_catalog_book_list(catalog_name, bood_isbn_id)
+        if catalog_updated:
+            return {"Book Added Successfully to the Catalog {}": catalog_name}
+    except Exception as ex:
+        template = "An exception of type {0} occurred. Arguments:\n{1!r}"
+        message = template.format(type(ex).__name__, ex.args)
+        return message
+
+# Getting books of a catalog from mongodb...
+@router.get(urls.get_books_of_catalog_url)
+async def get_books_of_catalog(catalog_name: str):
+    logger.info("Fetching catalog details for the ID {}".format(catalog_name))
+    try:
+        catalog_found = await database.get_catalog(catalog_name)
+        if catalog_found:
+            return {"books": catalog_found["books"]}
+    except Exception as ex:
+        template = "An exception of type {0} occurred. Arguments:\n{1!r}"
+        message = template.format(type(ex).__name__, ex.args)
+        return message
+
+# Deleting catalog data
+@router.delete(urls.delete_catalog_by_name_url)
+async def delete_catalog_by_name(catalog_name: str):
+    try:
+        catalog_deleted = await database.delete_catalog(catalog_name)
+        if catalog_deleted:
+            return {"name": catalog_name, "message": "Deletion successful"}
+    except Exception as ex:
+        template = "An exception of type {0} occurred. Arguments:\n{1!r}"
+        message = template.format(type(ex).__name__, ex.args)
+        return message
+
+# Getting list of catalogs from mongodb...
+@router.get(urls.get_all_catalogs_url)
+async def get_catalog_list():
+    catalogs = await database.retrieve_catalogs()
+    return {"catalogs": catalogs, "totalcatalogs": len(catalogs)}
 
 # Render welcome message
 @router.get('/', response_class=HTMLResponse)

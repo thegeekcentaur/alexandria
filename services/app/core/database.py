@@ -10,7 +10,8 @@ MONGO_DETAILS = "mongodb://mongodb:27017"
 client = motor.motor_asyncio.AsyncIOMotorClient(MONGO_DETAILS)
 database = client.user_preferences
 books_collection = database.get_collection("books_collection")
-
+catalog_collection = database.get_collection("catalog_collection")
+#database.catalog_collection.ensureIndex( { name: 1 }, { unique: true, sparse: true } )
 # helpers
 
 def format_book(book) -> dict:
@@ -61,3 +62,50 @@ async def retrieve_books():
     async for curr_book in books_collection.find():
         books.append(format_book(curr_book))
     return books
+
+
+
+#Catalog Operations added by ArchanaTBits
+def format_catalog(catalog) -> dict:
+    return {
+        "catalog_name": catalog["name"],
+        "description": catalog["description"],
+        "books": catalog["books_list"]
+    }
+
+async def create_catalog(catalog_data: dict):
+    catalog = await catalog_collection.insert_one(
+        { "name": catalog_data.name, "description": catalog_data.description, "books_list": catalog_data.books_list}
+    )
+    print(catalog_data.name)
+    new_catalog = await catalog_collection.find_one({"name": catalog_data.name})
+    return format_catalog(new_catalog)
+
+async def get_catalog(catalog_name: str) -> dict:
+    curr_catalog = await catalog_collection.find_one({"name": catalog_name})
+    return format_catalog(curr_catalog)
+
+async def update_catalog_book_list(catalog_name:str, book_isbn_id: str) -> dict:
+    curr_catalog = await catalog_collection.find_one({"name": catalog_name})
+    if curr_catalog is not None:
+        logger.info("Catalog Exists")
+        update_criteria = { "name": catalog_name }
+        curr_catalog["books_list"].append(book_isbn_id)
+        newvalues = {"$set": { "name": curr_catalog["name"] ,
+                               "description": curr_catalog["description"] ,
+                             "books_list": curr_catalog["books_list"]} }
+
+    catalog_updated = await catalog_collection.update_one(update_criteria, newvalues)
+    return catalog_updated.acknowledged
+
+async def delete_catalog(catalog_name: str):
+    catalog_available = await catalog_collection.find_one({"name": catalog_name})
+    if catalog_available:
+        await catalog_collection.delete_one({"name": catalog_name})
+    return True
+
+async def retrieve_catalogs():
+    catalogs = []
+    async for curr_catalog in catalog_collection.find():
+        catalogs.append(format_catalog(curr_catalog))
+    return catalogs

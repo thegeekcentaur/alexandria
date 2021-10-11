@@ -19,3 +19,12 @@ get_book_details_by_author = "/api/books/author/{author_name}"
 get_book_details_by_genre = "/api/books/genre/{genre}"
 # Added by Surabhi
 get_book_details_by_publisher = "/api/books/publishers/{publisher_name}"
+
+# Added by ArchanaTBits
+#Catalog APIs
+create_catalog_url="/api/catalogs/local"
+add_book_to_catalog_url="/api/catalogs/local/name/{catalog_name}/{book_id}"
+get_catalog_url="/api/catalogs/local/name/{catalog_name}"
+get_books_of_catalog_url="/api/catalogs/local/books"
+delete_catalog_by_name_url="/api/catalogs/local/name/{catalog_name}"
+get_all_catalogs_url="/api/catalogs/local/all"
