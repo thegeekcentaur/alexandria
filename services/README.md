@@ -3,7 +3,7 @@
 
 # Run/Set-up
 ```console
-docker build -t local/alexandria:1.0.002 . --no-cache
+docker build -t local/alexandria:1.0.003 . --no-cache
 ```
 
 # Goal/Objective
@@ -22,6 +22,8 @@ docker-compose up
 
 
 # Below are the services currently available
+
+Book APIs
 1. Save a New Book: /api/books/local
 2. Update an Existing Book: /api/books/local/id/{book_id}
 3. Get Book Details using Book Id: /api/books/local/id/{book_id}
@@ -31,6 +33,15 @@ docker-compose up
 7. Delete a Book Instance by its Id: /api/books/local/id/{book_id}
 8. Get all the Books Available : /api/books/local/all
 9. Get all Books by Publisher : /api/books/publishers/{publisher_name}
+
+Catalog APIs
+1. Create New Catalog: "/api/catalogs/local"
+2. Add a book to catalog: "/api/catalogs/local/name/{catalog_name}/{book_id}"
+3. Get Catalog Details using name:"/api/catalogs/local/name/{catalog_name}"
+4. Get All Books of a Catalog: "/api/catalogs/local/books"
+5. Delete a Catalog by name: "/api/catalogs/local/name/{catalog_name}"
+6. Get all Catalogs : "/api/catalogs/local/all"
+
 
 # Tips for implementing a new service
 1. Add URL Path in the **urls.py**

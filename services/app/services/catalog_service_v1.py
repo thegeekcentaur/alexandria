@@ -35,12 +35,12 @@ async def create_catalog(catalog_data: CatalogSchema = Body(...)):
 
 # Added by ArchanaTBits
 # Search Catalog
-@router.get(urls.get_catalog_url)
-async def get_catalog_details(catalog_name : str):
+@router.get(urls.get_all_catalogs_of_user_url)
+async def get_all_catalogs_of_user(user_id : str, catalog_name : str):
     try:
         logger.info("Fetching Catalog details :".format(catalog_name))
         print("Fetching Catalog details :")
-        catalog_item = await database.get_catalog(catalog_name)
+        catalog_item = await database.get_all_catalogs_of_user(user_id, catalog_name)
         print("catalog_item")
         print(catalog_item)
         if catalog_item:
@@ -53,14 +53,14 @@ async def get_catalog_details(catalog_name : str):
         message = template.format(type(ex).__name__, ex.args)
         return message
 
-# Updating the existing catalog data
-@router.put(urls.add_book_to_catalog_url)
-async def add_book_to_catalog(catalog_name: str, bood_isbn_id: str):
+# Updating the existing catalog books data
+@router.put(urls.update_books_to_catalog_url)
+async def update_books_to_catalog( user_id : str, catalog_name: str ,books_list: list[str]):
     logger.info("Adding book for the catalog {}".format(catalog_name))
     try:
-        catalog_updated = await database.update_catalog_book_list(catalog_name, bood_isbn_id)
+        catalog_updated = await database.update_catalog_book_list(user_id, catalog_name, books_list)
         if catalog_updated:
-            return {"Book Added Successfully to the Catalog {}": catalog_name}
+            return {"Books Updated Successfully to the Catalog {}": catalog_name}
     except Exception as ex:
         template = "An exception of type {0} occurred. Arguments:\n{1!r}"
         message = template.format(type(ex).__name__, ex.args)
@@ -68,10 +68,10 @@ async def add_book_to_catalog(catalog_name: str, bood_isbn_id: str):
 
 # Getting books of a catalog from mongodb...
 @router.get(urls.get_books_of_catalog_url)
-async def get_books_of_catalog(catalog_name: str):
+async def get_books_of_catalog(user_id : str, catalog_name: str):
     logger.info("Fetching catalog details for the ID {}".format(catalog_name))
     try:
-        catalog_found = await database.get_catalog(catalog_name)
+        catalog_found = await database.get_catalog(user_id, catalog_name)
         if catalog_found:
             return {"books": catalog_found["books"]}
     except Exception as ex:
@@ -81,15 +81,27 @@ async def get_books_of_catalog(catalog_name: str):
 
 # Deleting catalog data
 @router.delete(urls.delete_catalog_by_name_url)
-async def delete_catalog_by_name(catalog_name: str):
+async def delete_catalog_by_name(user_id : str, catalog_name: str):
     try:
-        catalog_deleted = await database.delete_catalog(catalog_name)
+        catalog_deleted = await database.delete_catalog(user_id,catalog_name)
         if catalog_deleted:
             return {"name": catalog_name, "message": "Deletion successful"}
     except Exception as ex:
         template = "An exception of type {0} occurred. Arguments:\n{1!r}"
         message = template.format(type(ex).__name__, ex.args)
         return message
+
+# Deleting books from catalog
+@router.put(urls.delete_catalog_by_name_url)
+async def delete_books_from_catalog(user_id : str, catalog_name: str, books_remove_list: list):
+            try:
+                catalog_updated = await database.delete_books_from_catalog(user_id,catalog_name,books_remove_list)
+                if catalog_updated:
+                    return {"name": catalog_name, "message": "Deletion of books from catalog is successful"}
+            except Exception as ex:
+                template = "An exception of type {0} occurred. Arguments:\n{1!r}"
+                message = template.format(type(ex).__name__, ex.args)
+                return message
 
 # Getting list of catalogs from mongodb...
 @router.get(urls.get_all_catalogs_url)
