@@ -30,3 +30,21 @@ get_all_catalogs_of_user_url="/api/catalogs/local/name/{catalog_name}"
 get_books_of_catalog_url="/api/catalogs/local/books"
 delete_catalog_by_name_url="/api/catalogs/local/name/{catalog_name}"
 get_all_catalogs_url="/api/catalogs/local/all"
+
+#Added By Surendar S BITs
+#User Management APIs
+get_all_users_url = "/api/user/local/all"
+get_all_user_by_id_url = "/api/user/local/id/{user_id}"
+save_user_url = "/api/user/local"
+update_user_by_id_url = "/api/user/local/id/{user_id}"
+delete_user_by_id_url = "/api/user/local/id/{user_id}"
+
+#Search Books by user impersonation
+search_book_by_user_id = "/api/user/{user_id}/book/search"
+
+#APIs to perfrom catalog CRUD operations by user impersonation
+get_all_catalog_for_user_id = "/api/user/{user_id}/catalog"
+get_catalog_by_name_for_user_id = "/api/user/{user_id}/catalog/{catalog_name}"
+save_catalog_by_user_id = "/api/user/{user_id}/catalog/"
+update_catalog_by_name_for_user_id = "/api/user/{user_id}/catalog/{catalog_name}"
+delete_catalog_by_name_for_user_id = "/api/user/{user_id}/catalog/{catalog_name}"
