@@ -139,6 +139,13 @@ async def retrieve_catalogs():
         catalogs.append(format_catalog(curr_catalog))
     return catalogs
 
+async def retrieve_catalogs_for_user(user_id: str):
+    catalogs_for_user = []
+    async for curr_catalog in catalog_collection.find():
+        if curr_catalog["user_id"] == user_id:
+            catalogs_for_user.append(format_catalog(curr_catalog))
+    return catalogs_for_user
+
 #User management operations by Surendar S BITs
 
 def format_user(user) -> dict:
