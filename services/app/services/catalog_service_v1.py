@@ -17,6 +17,7 @@ logger = logging.getLogger(__name__)
 # route-specific modules go here
 from api.routes import urls
 from core import database
+from typing import Optional
 from models.schemas.catalog import (
     CatalogSchema
 )
@@ -60,7 +61,7 @@ async def update_books_to_catalog( user_id : str, catalog_name: str ,books_list:
     try:
         catalog_updated = await database.update_catalog_book_list(user_id, catalog_name, books_list)
         if catalog_updated:
-            return {"Books Updated Successfully to the Catalog {}": catalog_name}
+            return {"Books Updated Successfully to the Catalog {}".format(catalog_name)}
     except Exception as ex:
         template = "An exception of type {0} occurred. Arguments:\n{1!r}"
         message = template.format(type(ex).__name__, ex.args)
@@ -71,7 +72,7 @@ async def update_books_to_catalog( user_id : str, catalog_name: str ,books_list:
 async def get_books_of_catalog(user_id : str, catalog_name: str):
     logger.info("Fetching catalog details for the ID {}".format(catalog_name))
     try:
-        catalog_found = await database.get_catalog(user_id, catalog_name)
+        catalog_found = await database.get_all_catalogs_of_user(user_id, catalog_name)
         if catalog_found:
             return {"books": catalog_found["books"]}
     except Exception as ex:
@@ -105,8 +106,11 @@ async def delete_books_from_catalog(user_id : str, catalog_name: str, books_remo
 
 # Getting list of catalogs from mongodb...
 @router.get(urls.get_all_catalogs_url)
-async def get_catalog_list():
-    catalogs = await database.retrieve_catalogs()
+async def get_catalog_list(user_id: Optional[str] = None):
+    if user_id:
+        catalogs = await database.retrieve_catalogs_for_user(user_id)
+    else:
+        catalogs = await database.retrieve_catalogs()
     return {"catalogs": catalogs, "totalcatalogs": len(catalogs)}
 
 # Render welcome message
