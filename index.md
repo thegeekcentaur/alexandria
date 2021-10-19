@@ -25,7 +25,7 @@ At basic level, Alexandria provides
 
 ### APIs available for Books
 
-You can perform basic CURD operations on the Book details through this project
+You can perform basic CRUD operations on the Book details through this project
 To know more about the services, go to our Services README [click on](https://github.com/arnab-chanda/alexandria/blob/master/services/README.md).
 
 ### Underlying Technologies/References
