@@ -11,6 +11,7 @@ from fastapi import FastAPI, Body, APIRouter, Request, Response, status
 from fastapi.responses import HTMLResponse
 import logging
 from core import database
+from . import (book_details_module)
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 

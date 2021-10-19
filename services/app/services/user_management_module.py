@@ -12,7 +12,7 @@ from typing import Optional
 import requests
 import logging
 from core import database
-from services import (book_details_module)
+from . import (book_details_module)
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
